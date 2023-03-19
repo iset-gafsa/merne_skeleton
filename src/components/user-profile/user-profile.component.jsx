@@ -16,6 +16,7 @@ import {
 import Typography from "@material-ui/core/Typography";
 import {Edit, Person} from "@material-ui/icons";
 import * as PropTypes from "prop-types";
+import DeleteUser from "../user-delete/user-delete.component";
 
 const defaultUser = {
     email: '',
@@ -36,9 +37,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-function DeleteUser(props) {
-    return null;
-}
+
 
 DeleteUser.propTypes = {userId: PropTypes.any};
 const UserProfileComponent = ({match}) => {
@@ -83,18 +82,17 @@ const UserProfileComponent = ({match}) => {
                             <Person/>
                         </Avatar>
                     </ListItemAvatar>
-                    { isAuthenticated().user && isAuthenticated().user._id ==
-                        user._id &&
-                        (<ListItemSecondaryAction>
-                            <Link to={"/user/edit/" + user._id}>
-                                <IconButton aria-label="Edit" color="primary">
-                                    <Edit/>
-                                </IconButton>
-                            </Link>
-                            <DeleteUser userId={user._id}/>
-                        </ListItemSecondaryAction>)
-                    }
-                    <ListItemText primary={user.name} secondary={user.email}/>
+                    <ListItemText primary={user.name} secondary={user.email}/> {
+                    isAuthenticated().user && isAuthenticated().user._id == user._id &&
+                    (<ListItemSecondaryAction>
+                        <Link to={"/user/edit/" + user._id}>
+                            <IconButton aria-label="Edit" color="primary">
+                                <Edit/>
+                            </IconButton>
+                        </Link>
+                        <DeleteUser userId={user._id}/>
+                    </ListItemSecondaryAction>)
+                }
                 </ListItem>
                 <Divider/>
                 <ListItem>
