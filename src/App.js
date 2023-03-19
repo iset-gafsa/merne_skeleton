@@ -1,25 +1,35 @@
-import logo from './logo.svg';
 import './App.css';
+import {Route, Routes} from "react-router";
+import NavigationComponent from "./routes/navigation/navigation.component";
+import HomeComponent from "./routes/home/home.component";
+import { hot } from 'react-hot-loader'
+import SignIn from "./routes/authentication/sign-in.component";
+import SignUp from "./routes/authentication/sign-up.component";
+import UserList from "./routes/users/users.component";
+import UserProfileComponent from "./components/user-profile/user-profile.component";
+import PrivateRoute from "./routes/private-route/private-route";
+import UserEditComponent from "./components/user-edit/user-edit.component";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path='/' element={<NavigationComponent/>}>
+          <Route index element={<HomeComponent/>} />
+          <Route exact path='/users' element={<UserList/>}/>
+          <Route path='/users/:userId' element={<UserProfileComponent/>}/>
+          <Route path='/signin' element={<SignIn/>}/>
+          <Route
+              path="/user/edit/:userId"
+              element={
+                  <PrivateRoute>
+                      <UserEditComponent></UserEditComponent>
+                  </PrivateRoute>
+              }
+          />
+          <Route path='/signup' element={<SignUp/>}/>
+      </Route>
+    </Routes>
   );
 }
 
-export default App;
+export default hot(module)(App);
